@@ -1,0 +1,27 @@
+{
+	"name": "api",
+	"version": "1.0.0",
+	"description": "https://getstream.io/",
+	"scripts": {
+		"start": "cd dist && node server.js",
+		"watch": "nodemon start && npx babel src --watch --out-dir dist --ignore src/node_modules",
+		"build": "./build.sh"
+	},
+	"author": "nuclearglow",
+	"license": "",
+	"keywords": [
+		"BuBaK",
+		"API",
+		"Express",
+		"REST",
+		"Mongoose",
+		"MongoDB"
+	],
+	"dependencies": {
+		"@babel/cli": "^7.1.2"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.1.2",
+		"@babel/preset-env": "^7.1.0"
+	}
+}
