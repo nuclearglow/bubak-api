@@ -2,8 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
-const outputDirectory = path.resolve(path.join(process.cwd(), 'dist'));
-
 const config = {
     mode: 'development',
     plugins: [
@@ -11,7 +9,7 @@ const config = {
     ],
     entry: path.resolve(path.join(process.cwd(), 'src', 'server.js')),
     output: {
-        path: outputDirectory,
+        path: path.resolve(path.join(process.cwd(), 'dist')),
         publicPath: '/',
         filename: 'server.js',
         chunkFilename: '[id].[chunkhash:20].chunk.js'
@@ -43,7 +41,7 @@ const config = {
         // fallback value for stats options when an option is not defined (has precedence over local webpack defaults)
         all: undefined,
         // Add asset Information
-        assets: false,
+        assets: true,
         // Sort assets by a field
         // You can reverse the sort with `!field`.
         assetsSort: 'field',

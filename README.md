@@ -4,21 +4,19 @@ our backend REST API
 
 ## inspired by
 
-https://medium.com/@nparsons08/building-a-node-js-powered-api-with-express-mongoose-mongodb-19b14fd4b51e.
+https://medium.com/@christossotiriou/speed-up-nodejs-server-side-development-with-webpack-4-hmr-8b99a932bdda
+
 
 ## setup
 
 ```shell
 nvm install stable
 nvm use
-yarn install
-cd src && yarn install
+npm i
 ```
 
 ## develop
 
 ```shell
-npm run watch
+npm run dev:server
 ```
-
-
