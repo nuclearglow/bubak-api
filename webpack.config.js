@@ -1,10 +1,12 @@
 const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const config = {
     mode: 'development',
     plugins: [
+        new CleanWebpackPlugin(['logs/*.log']),
         new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: false }),
     ],
     entry: path.resolve(path.join(process.cwd(), 'src', 'server.js')),
