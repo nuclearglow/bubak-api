@@ -6,6 +6,15 @@ our backend REST API
 
 https://medium.com/@christossotiriou/speed-up-nodejs-server-side-development-with-webpack-4-hmr-8b99a932bdda
 
+## prereqs
+
+```shell
+brew install mongodb
+brew services start mongodb
+```
+
+Create database
+Create .env file <- `src/utils/config.js`
 
 ## setup
 
@@ -18,5 +27,5 @@ npm i
 ## develop
 
 ```shell
-npm run dev:server
+npm start
 ```
