@@ -3,17 +3,13 @@ import validator from 'validator';
 
 import User from '../models/user';
 
-import logger from '../utils/logger';
+import logger from '../utils/logging';
 
-exports.list = (req, res) => {
-    const params = req.params || {};
+const list = (req, res) => {
     const query = req.query || {};
 
-    const page = parseInt(query.page, 10) || 0;
-    const perPage = parseInt(query.per_page, 10) || 10;
-
-    User.apiQuery(req.query)
-        .select('name email username bio url twitter background')
+    User.apiQuery(query)
+        .select('name email username')
         .then((users) => {
             res.json(users);
         })
@@ -23,21 +19,16 @@ exports.list = (req, res) => {
         });
 };
 
-exports.get = (req, res) => {
+const get = (req, res) => {
     User.findById(req.params.userId)
-        .then((user) => {
-            user.password = undefined;
-            user.recoveryCode = undefined;
-
-            res.json(user);
-        })
+        .select('* -password -recoveryCode')
         .catch((err) => {
             logger.error(err);
             res.status(422).send(err.errors);
         });
 };
 
-exports.put = (req, res) => {
+const put = (req, res) => {
     const data = req.body || {};
 
     if (data.email && !validator.isEmail(data.email)) {
@@ -53,48 +44,46 @@ exports.put = (req, res) => {
             if (!user) {
                 return res.sendStatus(404);
             }
-
+            // FIXME, how to do this better
             user.password = undefined;
             user.recoveryCode = undefined;
 
-            res.json(user);
+            return res.json(user);
         })
         .catch((err) => {
             logger.error(err);
-            res.status(422).send(err.errors);
+            return res.status(422).send(err.errors);
         });
 };
 
-exports.post = (req, res) => {
+const post = (req, res) => {
+    // ???
     const data = Object.assign({}, req.body, { user: req.user.sub }) || {};
 
     User.create(data)
-        .then((user) => {
-            res.json(user);
-        })
+        .then(user => res.json(user))
         .catch((err) => {
             logger.error(err);
             res.status(500).send(err);
         });
 };
 
-exports.delete = (req, res) => {
+const del = (req, res) => {
     User.findByIdAndUpdate(
         { _id: req.params.user },
         { active: false },
-        {
-            new: true
+        { new: true }
+    ).then((user) => {
+        if (!user) {
+            return res.sendStatus(404);
         }
-    )
-        .then((user) => {
-            if (!user) {
-                return res.sendStatus(404);
-            }
+        return res.sendStatus(204);
+    }).catch((err) => {
+        logger.error(err);
+        res.status(422).send(err.errors);
+    });
+};
 
-            res.sendStatus(204);
-        })
-        .catch((err) => {
-            logger.error(err);
-            res.status(422).send(err.errors);
-        });
+export default {
+    list, get, put, post, del
 };
