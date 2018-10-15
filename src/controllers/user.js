@@ -85,7 +85,6 @@ export const del = (req, res) => {
 
 // initializes the database with the admin user (with creds from .env)
 export const init = () => {
-    logger.info('Init');
     User.findOne({ username: config.adminUser }, (err, adminUser) => {
         if (err || !adminUser) {
             logger.info('Admin user not found, creating it now');

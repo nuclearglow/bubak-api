@@ -3,7 +3,7 @@ import logger from './logging';
 
 dotenv.config();
 
-logger.info('Loaded dotenv config');
+logger.info(`Loaded config for env ${process.env.ENV}`);
 
 export default {
     env: process.env.ENV,
