@@ -1,11 +1,10 @@
-import async from 'async';
 import validator from 'validator';
 
+import config from '../utils/config';
 import User from '../models/user';
-
 import logger from '../utils/logging';
 
-const list = (req, res) => {
+export const list = (req, res) => {
     const query = req.query || {};
 
     User.apiQuery(query)
@@ -19,7 +18,7 @@ const list = (req, res) => {
         });
 };
 
-const get = (req, res) => {
+export const get = (req, res) => {
     User.findById(req.params.userId)
         .select('* -password -recoveryCode')
         .catch((err) => {
@@ -28,7 +27,7 @@ const get = (req, res) => {
         });
 };
 
-const put = (req, res) => {
+export const put = (req, res) => {
     const data = req.body || {};
 
     if (data.email && !validator.isEmail(data.email)) {
@@ -56,7 +55,7 @@ const put = (req, res) => {
         });
 };
 
-const post = (req, res) => {
+export const post = (req, res) => {
     // ???
     const data = Object.assign({}, req.body, { user: req.user.sub }) || {};
 
@@ -68,7 +67,7 @@ const post = (req, res) => {
         });
 };
 
-const del = (req, res) => {
+export const del = (req, res) => {
     User.findByIdAndUpdate(
         { _id: req.params.user },
         { active: false },
@@ -84,6 +83,28 @@ const del = (req, res) => {
     });
 };
 
-export default {
-    list, get, put, post, del
+// initializes the database with the admin user (with creds from .env)
+export const init = () => {
+    logger.info('Init');
+    User.findOne({ username: config.adminUser }, (err, adminUser) => {
+        if (err || !adminUser) {
+            logger.info('Admin user not found, creating it now');
+            User.create({
+                email: config.adminUserEmail,
+                username: config.adminUser,
+                password: config.adminUserPass,
+                name: config.adminUserName,
+                active: true,
+                admin: true
+            }, (error, admin) => {
+                if (error) {
+                    logger.error(`Error creating admin user: ${error}`);
+                } else {
+                    logger.info(`Created admin user: ${admin.username}`);
+                }
+            });
+        } else {
+            logger.info('Admin user already exists');
+        }
+    });
 };

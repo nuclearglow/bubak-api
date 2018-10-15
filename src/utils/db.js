@@ -1,20 +1,14 @@
 import mongoose from 'mongoose';
 
-// FIXME: use config
 import config from './config';
 import logger from './logging';
 
 mongoose.Promise = global.Promise;
-
-logger.info(`Database URI: ${config.databaseUri}`);
-
-const connection = mongoose.connect(config.databaseUri);
+const connection = mongoose.connect(config.databaseUri, { useNewUrlParser: true });
 
 connection
     .then((db) => {
-        logger.info(
-            `Successfully connected to ${config.databaseUri} MongoDB cluster in ${config.env} mode.`,
-        );
+        logger.info(`Successfully connected to MongoDB cluster in ${config.env} mode.`);
         return db;
     })
     .catch((err) => {
@@ -26,5 +20,22 @@ connection
             logger.error(err);
         }
     });
+
+// If the connection throws an error
+mongoose.connection.on('error', (err) => {
+    logger.error(`Mongoose default connection error: ${err}`);
+});
+
+// When the connection is disconnected
+mongoose.connection.on('disconnected', () => {
+    logger.warn('Mongoose default connection disconnected');
+});
+
+process.on('SIGINT', () => {
+    mongoose.connection.close(() => {
+        logger.warn('Mongoose default connection disconnected through app termination');
+        process.exit(0);
+    });
+});
 
 export default connection;

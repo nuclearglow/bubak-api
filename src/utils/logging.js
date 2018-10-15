@@ -26,6 +26,4 @@ if (process.env.NODE_ENV !== 'production') {
     }));
 }
 
-logger.info('Initialized Logging');
-
 export default logger;

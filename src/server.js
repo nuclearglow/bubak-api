@@ -4,7 +4,7 @@ import cors from 'cors';
 import compression from 'compression';
 import jwt from 'express-jwt';
 
-import User from './controllers/user';
+import * as User from './controllers/user';
 import logger from './utils/logging';
 import db from './utils/db';
 
@@ -47,13 +47,14 @@ api.route('/users/:userId').put(User.put);
 api.route('/users/').post(User.post);
 api.route('/users/:userId').delete(User.del);
 
-
 // start
 api.listen(8080, (err) => {
     if (err) {
         console.error(`Error starting server: ${err}`);
     } else {
         logger.info('Now listening on: http://localhost:8080');
+        // check if admin user exists
+        User.init();
     }
 });
 

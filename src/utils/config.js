@@ -7,5 +7,9 @@ logger.info('Loaded dotenv config');
 
 export default {
     env: process.env.ENV,
-    databaseUri: process.env.DB_HOST
+    databaseUri: `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    adminUser: process.env.API_ADMIN_USER,
+    adminUserPass: process.env.API_ADMIN_PASS,
+    adminUserEmail: process.env.API_ADMIN_EMAIL,
+    adminUserName: process.env.API_ADMIN_NAME
 };
