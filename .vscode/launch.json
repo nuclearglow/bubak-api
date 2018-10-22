@@ -9,7 +9,13 @@
             "request": "launch",
             "sourceMaps": true,
             "name": "Debug bubak-api",
-            "program": "${workspaceFolder}/dist/server.js"
+            "program": "${workspaceFolder}/dist/server.js",
+            "console": "internalConsole",
+            "outputCapture": "std",
+            // "restart": true,
+            // "skipFiles": [
+            //     "<node_internals>/**/*.js"
+            // ]
         }
     ]
 }

@@ -4,6 +4,7 @@ import config from '../utils/config';
 import User from '../models/user';
 import logger from '../utils/logging';
 
+// list all users
 export const list = (req, res) => {
     const query = req.query || {};
 
@@ -18,9 +19,13 @@ export const list = (req, res) => {
         });
 };
 
+// get a single user
 export const get = (req, res) => {
     User.findById(req.params.userId)
-        .select('* -password -recoveryCode')
+        .select('email username name active admin')
+        .then((user) => {
+            res.json(user);
+        })
         .catch((err) => {
             logger.error(err);
             res.status(422).send(err.errors);
