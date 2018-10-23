@@ -32,6 +32,20 @@ export const get = (req, res) => {
         });
 };
 
+export const post = (req, res) => {
+    const data = Object.assign({}, req.body);
+
+    User.create(data)
+        .then((user) => {
+            logger.info(`User created: ${user.username}`);
+            res.status(201).send(user.id);
+        })
+        .catch((err) => {
+            logger.error(err);
+            res.status(500).send(err);
+        });
+};
+
 export const put = (req, res) => {
     const data = req.body || {};
 
@@ -43,16 +57,13 @@ export const put = (req, res) => {
         return res.status(422).send('Usernames must be alphanumeric.');
     }
 
-    User.findByIdAndUpdate({ _id: req.params.userId }, data, { new: true })
+    User.findByIdAndUpdate({ _id: req.params.userId }, data)
         .then((user) => {
             if (!user) {
                 return res.sendStatus(404);
             }
-            // FIXME, how to do this better
-            user.password = undefined;
-            user.recoveryCode = undefined;
-
-            return res.json(user);
+            logger.info(`User updated: ${user.username}`);
+            return res.sendStatus(204);
         })
         .catch((err) => {
             logger.error(err);
@@ -60,32 +71,18 @@ export const put = (req, res) => {
         });
 };
 
-export const post = (req, res) => {
-    // ???
-    const data = Object.assign({}, req.body, { user: req.user.sub }) || {};
-
-    User.create(data)
-        .then(user => res.json(user))
-        .catch((err) => {
-            logger.error(err);
-            res.status(500).send(err);
-        });
-};
-
 export const del = (req, res) => {
-    User.findByIdAndUpdate(
-        { _id: req.params.user },
-        { active: false },
-        { new: true }
-    ).then((user) => {
-        if (!user) {
-            return res.sendStatus(404);
-        }
-        return res.sendStatus(204);
-    }).catch((err) => {
-        logger.error(err);
-        res.status(422).send(err.errors);
-    });
+    User.findByIdAndDelete({ _id: req.params.userId })
+        .then((user) => {
+            if (!user) {
+                return res.sendStatus(404);
+            }
+            logger.info(`User deleted: ${user.username}`);
+            return res.sendStatus(204);
+        }).catch((err) => {
+            logger.error(err);
+            res.status(422).send(err.errors);
+        });
 };
 
 // initializes the database with the admin user (with creds from .env)

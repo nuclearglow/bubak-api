@@ -10,7 +10,7 @@
             "sourceMaps": true,
             "name": "Debug bubak-api",
             "program": "${workspaceFolder}/dist/server.js",
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "outputCapture": "std",
             // "restart": true,
             // "skipFiles": [

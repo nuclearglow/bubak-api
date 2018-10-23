@@ -1,0 +1,237 @@
+{
+	"info": {
+		"_postman_id": "9fdf9c1f-6d35-b8d1-9643-61e005dbf907",
+		"name": "bubak-api",
+		"description": "Bubak API REST Client",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/about",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/about",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"about"
+					]
+				},
+				"description": "Test /about"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				},
+				"description": "list users"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users/5bc50621f5d2840107d7abd0",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/users/5bc50621f5d2840107d7abd0",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"5bc50621f5d2840107d7abd0"
+					]
+				},
+				"description": "get a single user"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "recoveryCode",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "active",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "admin",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test-user@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "postmanuser",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "egsssscgrtcgertgrgrgresrgsrcgcsregrse",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "postmanuser",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				},
+				"description": "CREATE user"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users/5bcf8339a53eaf51bb114e83",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "recoveryCode",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "active",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "admin",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test-user-updated@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "postmanuserupdated",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "postmanuser-updated",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/users/5bcf8775571c80525d057719",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"5bcf8775571c80525d057719"
+					]
+				},
+				"description": "update user"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users/5bcf8339a53eaf51bb114e83",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/users/5bcf8339a53eaf51bb114e83",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"5bcf8339a53eaf51bb114e83"
+					]
+				},
+				"description": "Delete User"
+			},
+			"response": []
+		}
+	]
+}
