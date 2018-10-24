@@ -3,6 +3,5 @@
         "@babel/env"
     ],
     "plugins": [
-
     ]
 }
