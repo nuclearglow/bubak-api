@@ -30,11 +30,90 @@
 			"response": []
 		},
 		{
+			"name": "localhost:8080/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "recoveryCode",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "active",
+							"value": "true",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "admin",
+							"value": "false",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "test-user@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "postmanuser",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "egsssscgrtcgertgrgrgresrgsrcgcsregrse",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "postmanuser",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "localhost:8080/user",
 			"request": {
 				"method": "GET",
-				"header": [],
-				"body": {},
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZDA2Y2JhMjFlY2QxNjAyMTU1ZjYxNyIsImlhdCI6MTU0MDQxMzc5MiwiZXhwIjoxNTQwNDE3MzkyfQ.vTT1Uoq98KJqX8POYWOo6W5K9qeqs_wKDfeA3i4GBKQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "localhost:8080/user",
 					"host": [
@@ -53,8 +132,17 @@
 			"name": "localhost:8080/user/5bc50621f5d2840107d7abd0",
 			"request": {
 				"method": "GET",
-				"header": [],
-				"body": {},
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZDA2Y2JhMjFlY2QxNjAyMTU1ZjYxNyIsImlhdCI6MTU0MDQxMzc5MiwiZXhwIjoxNTQwNDE3MzkyfQ.vTT1Uoq98KJqX8POYWOo6W5K9qeqs_wKDfeA3i4GBKQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "localhost:8080/user/5bc50621f5d2840107d7abd0",
 					"host": [
