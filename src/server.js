@@ -2,44 +2,33 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import compression from 'compression';
-import jwt from 'express-jwt';
 
-import * as User from './controllers/user';
-import * as Konzi from './controllers/konzi';
 import logger from './utils/logging';
 import db from './utils/db';
 
-// express
+import { verifyTokenMiddleware } from './utils/auth';
+import * as Auth from './controllers/auth.controller';
+import * as User from './controllers/user.controller';
+import * as Konzi from './controllers/konzi.controller';
+
 const api = express();
+
 // middleware
 api.use(cors());
 api.use(compression());
 api.use(bodyParser.urlencoded({ extended: true }));
 api.use(bodyParser.json());
-// api
-// api.use(
-//     jwt({ secret: 'FIXME' }).unless({
-//         path: [
-//             '/',
-//             '/about',
-//             '/auth/signup',
-//             '/auth/login',
-//             '/auth/forgot-password',
-//             '/auth/reset-password'
-//         ]
-//     })
-// );
 
-api.use((err, req, res, next) => {
-    if (err.name === 'UnauthorizedError') {
-        res.status(401).send('Missing authentication credentials.');
-    }
-});
+// require token - unless using whitelisted calls
+api.use(verifyTokenMiddleware().unless({
+    path: [
+        { url: '/login', methods: 'POST' },
+        { url: '/konzi', methods: 'GET' }
+    ]
+}));
 
-api.get('/about', (req, res) => {
-    res.json({ anarchy: true });
-});
-
+// login route
+api.route('/login').post(Auth.login);
 
 // User CRUD
 api.route('/user').get(User.list);

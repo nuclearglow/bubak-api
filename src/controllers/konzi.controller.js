@@ -1,7 +1,4 @@
-import validator from 'validator';
-
-import config from '../utils/config';
-import Konzi from '../models/konzi';
+import Konzi from '../models/konzi.model';
 import logger from '../utils/logging';
 
 // list all konzis

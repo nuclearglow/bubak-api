@@ -1,7 +1,7 @@
 import validator from 'validator';
 
 import config from '../utils/config';
-import User from '../models/user';
+import User from '../models/user.model';
 import logger from '../utils/logging';
 
 // list all users

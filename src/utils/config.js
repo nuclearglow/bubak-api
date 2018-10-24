@@ -11,5 +11,6 @@ export default {
     adminUser: process.env.API_ADMIN_USER,
     adminUserPass: process.env.API_ADMIN_PASS,
     adminUserEmail: process.env.API_ADMIN_EMAIL,
-    adminUserName: process.env.API_ADMIN_NAME
+    adminUserName: process.env.API_ADMIN_NAME,
+    jwtSecret: process.env.JWT_SECRET
 };

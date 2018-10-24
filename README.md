@@ -15,6 +15,7 @@ brew services start mongodb
 
 Create database
 Create .env file <- `src/utils/config.js`
+For JWT_SECRET, use a RNG such as https://ipty.de/random/
 
 ## setup
 
