@@ -10,17 +10,16 @@ export const login = async (req, res) => {
         if (!user) {
             logger.warn(`Login failed: User not found: ${username}`);
             res.sendStatus(401);
+            return;
+        }
+        const valid = await user.verifyPassword(password);
+        if (valid) {
+            logger.info(`User logged in: ${username}`);
+            const token = createToken(user.id);
+            res.status(200).json({ token });
         } else {
-            user.verifyPassword(password, (err, valid) => {
-                if (!err && valid) {
-                    logger.info(`User logged in: ${username}`);
-                    const token = createToken(user.id);
-                    res.status(200).json({ token });
-                } else {
-                    logger.warn(`Login failed! Password mismatch: ${username}`);
-                    res.sendStatus(401);
-                }
-            });
+            logger.warn(`Login failed! Password mismatch: ${username}`);
+            res.sendStatus(401);
         }
     } catch (err) {
         logger.error(`Login failed for ${username}: ${err}`);

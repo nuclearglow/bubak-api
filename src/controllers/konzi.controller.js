@@ -2,18 +2,15 @@ import Konzi from '../models/konzi.model';
 import logger from '../utils/logging';
 
 // list all konzis
-export const list = (req, res) => {
-    const query = req.query || {};
-
-    Konzi.apiQuery(query)
-        .select('date descxription')
-        .then((konzis) => {
-            res.json(konzis);
-        })
-        .catch((err) => {
-            logger.error(err);
-            res.status(422).send(err.errors);
-        });
+export const list = async (req, res) => {
+    try {
+        const query = req.query || {};
+        const konzis = await Konzi.apiQuery(query).select('date description');
+        res.json(konzis);
+    } catch (err) {
+        logger.error(err);
+        res.status(422).send(err.errors);
+    }
 };
 
 // get a single konzi
