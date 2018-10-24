@@ -5,6 +5,7 @@ import compression from 'compression';
 import jwt from 'express-jwt';
 
 import * as User from './controllers/user';
+import * as Konzi from './controllers/konzi';
 import logger from './utils/logging';
 import db from './utils/db';
 
@@ -46,6 +47,13 @@ api.route('/user/:userId').get(User.get);
 api.route('/user/:userId').put(User.put);
 api.route('/user/').post(User.post);
 api.route('/user/:userId').delete(User.del);
+
+// Konzi CRUD
+api.route('/konzi').get(Konzi.list);
+api.route('/konzi/:konziId').get(Konzi.get);
+api.route('/konzi/:konziId').put(Konzi.put);
+api.route('/konzi/').post(Konzi.post);
+api.route('/konzi/:konziId').delete(Konzi.del);
 
 // start
 api.listen(8080, (err) => {
