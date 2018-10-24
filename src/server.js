@@ -41,11 +41,11 @@ api.get('/about', (req, res) => {
 
 
 // User CRUD
-api.route('/users').get(User.list);
-api.route('/users/:userId').get(User.get);
-api.route('/users/:userId').put(User.put);
-api.route('/users/').post(User.post);
-api.route('/users/:userId').delete(User.del);
+api.route('/user').get(User.list);
+api.route('/user/:userId').get(User.get);
+api.route('/user/:userId').put(User.put);
+api.route('/user/').post(User.post);
+api.route('/user/:userId').delete(User.del);
 
 // start
 api.listen(8080, (err) => {

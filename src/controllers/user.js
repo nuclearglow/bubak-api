@@ -32,6 +32,7 @@ export const get = (req, res) => {
         });
 };
 
+// create user
 export const post = (req, res) => {
     const data = Object.assign({}, req.body);
 
@@ -46,15 +47,16 @@ export const post = (req, res) => {
         });
 };
 
+// update user
 export const put = (req, res) => {
     const data = req.body || {};
 
     if (data.email && !validator.isEmail(data.email)) {
-        return res.status(422).send('Invalid email address.');
+        res.status(422).send('Invalid email address.');
     }
 
     if (data.username && !validator.isAlphanumeric(data.username)) {
-        return res.status(422).send('Usernames must be alphanumeric.');
+        res.status(422).send('Usernames must be alphanumeric.');
     }
 
     User.findByIdAndUpdate({ _id: req.params.userId }, data)
@@ -71,14 +73,15 @@ export const put = (req, res) => {
         });
 };
 
+// delete user
 export const del = (req, res) => {
     User.findByIdAndDelete({ _id: req.params.userId })
         .then((user) => {
             if (!user) {
-                return res.sendStatus(404);
+                res.sendStatus(404);
             }
             logger.info(`User deleted: ${user.username}`);
-            return res.sendStatus(204);
+            res.sendStatus(204);
         }).catch((err) => {
             logger.error(err);
             res.status(422).send(err.errors);
