@@ -23,12 +23,14 @@ api.use(bodyParser.json());
 api.use(verifyTokenMiddleware().unless({
     path: [
         { url: '/login', methods: 'POST' },
+        { url: '/recover', methods: 'POST' },
         { url: '/konzi', methods: 'GET' }
     ]
 }));
 
-// login route
+// Auth routes
 api.route('/login').post(Auth.login);
+api.route('/recover').post(Auth.recover);
 
 // User CRUD
 api.route('/user').get(User.list);

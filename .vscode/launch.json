@@ -6,16 +6,11 @@
     "configurations": [
         {
             "type": "node",
-            "request": "launch",
-            "sourceMaps": true,
-            "name": "Debug bubak-api",
-            "program": "${workspaceFolder}/dist/server.js",
-            "console": "integratedTerminal",
-            "outputCapture": "std",
-            // "restart": true,
-            // "skipFiles": [
-            //     "<node_internals>/**/*.js"
-            // ]
+            "request": "attach",
+            "name": "Debugging bubak-api",
+            "port": 9229,
+            "restart": true,
+            "sourceMaps": true
         }
     ]
 }

@@ -1,6 +1,11 @@
+import validator from 'validator';
+import crypto from 'crypto';
+import nodemailer from 'nodemailer';
+
 import User from '../models/user.model';
 import logger from '../utils/logging';
 import { createToken } from '../utils/auth';
+import config from '../utils/config';
 
 // login a user
 export const login = async (req, res) => {
@@ -26,10 +31,71 @@ export const login = async (req, res) => {
     }
 };
 
-export const recover = (req, res) => {
-    // TODO: send email with recovery code
+// enter a valid email or username and a recivery code gets sent to the email to reset the password
+export const recover = async (req, res) => {
+    const { usernameOrEmail } = req.body;
+    let user = null;
+    try {
+        if (usernameOrEmail) {
+            // what do we have here ?
+            if (validator.isEmail(usernameOrEmail)) {
+                user = await User.findOne({ email: usernameOrEmail });
+            } else if (validator.isAlphanumeric(usernameOrEmail)) {
+                user = await User.findOne({ username: usernameOrEmail });
+            }
+        }
+        if (user) {
+            // we have a user, generate a random recovery code that works in a URL
+            const recoveryCode = crypto.randomBytes(Math.ceil(128 / 2)).toString('hex').slice(0, 128);
+            // save the code in the User record
+            user.recoveryCode = recoveryCode;
+            await user.save();
+            // send the email to the user
+            const recoveryUrl = `${config.serverUrl}/${recoveryCode}`;
+            // FIXME: replace with real account
+            nodemailer.createTestAccount(async (err, account) => {
+                if (err) {
+                    logger.error(`Error setting up nodemailer: ${err}`);
+                }
+                // create reusable transporter object using the default SMTP transport
+                const transporter = nodemailer.createTransport({
+                    host: 'smtp.ethereal.email',
+                    port: 587,
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        user: account.user, // generated ethereal user
+                        pass: account.pass // generated ethereal password
+                    }
+                });
+                // setup email data with unicode symbols
+                const mailOptions = {
+                    from: 'bubak', // sender address
+                    to: `${config.adminUserEmail}`, // list of receivers
+                    subject: 'Hello', // Subject line
+                    text: `Passwort verschwitzt? Klick hier: ${recoveryUrl}`, // plain text body
+                    html: `Passwort verschwitzt? Klick hier: ${recoveryUrl}` // html body
+                };
+                // send mail with defined transport object
+
+                transporter.sendMail(mailOptions, (error, response) => {
+                    if (error) {
+                        logger.error(`Error sending mail: ${error}`);
+                    } else {
+                        logger.info(`Message sent: ${response.messageId}`);
+                        // Preview only available when sending through an Ethereal account
+                        logger.info(`Preview URL: ${nodemailer.getTestMessageUrl(response)}`);
+                    }
+                });
+            });
+        }
+    } catch (err) {
+        logger.warn(`Recover: invalid user name or email: ${usernameOrEmail}: ${err}`);
+    } finally {
+        res.sendStatus(204);
+    }
 };
 
+// if a user has successfully followed the recover link, a new password is set
 export const reset = (req, res) => {
-    // TODO: endpoint to send new password to
+
 };
