@@ -51,7 +51,7 @@ export const recover = async (req, res) => {
             user.recoveryCode = recoveryCode;
             await user.save();
             // send the email to the user
-            const recoveryUrl = `${config.serverUrl}/${recoveryCode}`;
+            const recoveryUrl = `${config.serverUrl}/reset/${recoveryCode}`;
             // FIXME: replace with real account
             nodemailer.createTestAccount(async (err, account) => {
                 if (err) {

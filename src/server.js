@@ -23,10 +23,10 @@ api.use(bodyParser.json());
 // require a token - unless using whitelisted calls
 api.use(verifyTokenMiddleware().unless({
     path: [
-        { url: '/login', methods: 'POST' },
-        { url: '/recover', methods: 'POST' },
-        { url: '/reset', methods: 'POST' },
-        { url: '/konzi', methods: 'GET' }
+        { url: '/login', methods: 'POST' }, // login is public
+        { url: '/recover', methods: 'POST' }, // forgot password is oublix
+        /\/reset\/[0-9a-fA-F]{128}/, // allow reset URL with recovery code from email
+        { url: '/konzi', methods: 'GET' } // konzis are public
     ]
 }));
 // Auth routes
