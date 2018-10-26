@@ -8,7 +8,7 @@ module.exports = {
     "rules": {
         "indent": ["error", 4],
         "max-len": ["error", { "code": 255 }],
-        "no-console": "off",
+        "no-console": "error",
         "comma-dangle": "off",
     }
 };
