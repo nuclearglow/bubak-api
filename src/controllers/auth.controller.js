@@ -96,6 +96,26 @@ export const recover = async (req, res) => {
 };
 
 // if a user has successfully followed the recover link, a new password is set
-export const reset = (req, res) => {
-
+export const reset = async (req, res) => {
+    const { newPassword } = req.body;
+    // check password length
+    if (!newPassword || newPassword.length < 8) {
+        return res.status(406).send('Reset Password failed: : Invalid password');
+    }
+    try {
+        // get user from /path
+        const { recoveryCode } = req.params;
+        const user = await User.findOne({ recoveryCode });
+        if (!user) {
+            logger.warn('Reset Password failed: Invalid recoveryCode.');
+            return res.sendStatus(400);
+        }
+        // ok, save the user with the new password
+        user.password = newPassword;
+        await user.save();
+    } catch (err) {
+        logger.error(`Reset Password failed: ${err}`);
+        return res.sendStatus(500);
+    }
+    return res.sendStatus(200);
 };

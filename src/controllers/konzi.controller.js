@@ -6,70 +6,74 @@ export const list = async (req, res) => {
     try {
         const query = req.query || {};
         const konzis = await Konzi.apiQuery(query).select('date description');
-        res.json(konzis);
+        if (!konzis) {
+            logger.warn('No konzis found');
+            return res.json([]);
+        }
+        return res.json(konzis);
     } catch (err) {
         logger.error(err);
-        res.status(422).send(err.errors);
+        return res.status(422).send(err.errors);
     }
 };
 
 // get a single konzi
-export const get = (req, res) => {
-    Konzi.findById(req.params.konziId)
-        .select('date title description')
-        .then((konzi) => {
-            res.json(konzi);
-        })
-        .catch((err) => {
-            logger.error(err);
-            res.status(422).send(err.errors);
-        });
+export const get = async (req, res) => {
+    try {
+        const konzi = await Konzi.findById(req.params.konziId).select('date title description');
+        if (!konzi) {
+            logger.info(`Konzi not found: ${req.params.konziId}`);
+            return res.sendStatus(404);
+        }
+        return res.json(konzi);
+    } catch (err) {
+        logger.error(err);
+        return res.status(422).send(err.errors);
+    }
 };
 
 // create konzi
-export const post = (req, res) => {
-    const data = Object.assign({}, req.body);
-
-    Konzi.create(data)
-        .then((konzi) => {
-            logger.info(`Konzi created: ${konzi.title}`);
-            res.status(201).send(konzi.id);
-        })
-        .catch((err) => {
-            logger.error(err);
-            res.status(500).send(err);
-        });
+export const post = async (req, res) => {
+    try {
+        const konzi = new Konzi(req.body);
+        await konzi.save();
+        logger.info(`Konzi created: ${konzi.title}`);
+        return res.status(201).send(konzi.id);
+    } catch (err) {
+        logger.error(err);
+        return res.sendStatus(422);
+    }
 };
 
 // update konzi
-export const put = (req, res) => {
-    const data = req.body || {};
-
-    Konzi.findByIdAndUpdate({ _id: req.params.konziId }, data)
-        .then((konzi) => {
-            if (!konzi) {
-                return res.sendStatus(404);
-            }
-            logger.info(`Konzi updated: ${konzi.title}`);
-            return res.sendStatus(204);
-        })
-        .catch((err) => {
-            logger.error(err);
-            return res.status(422).send(err.errors);
-        });
+export const put = async (req, res) => {
+    try {
+        const data = req.body || {};
+        const konzi = await Konzi.findByIdAndUpdate({ _id: req.params.konziId }, data);
+        if (!konzi) {
+            logger.info(`Konzi not updated: ${req.params.konziId}`);
+            return res.sendStatus(404);
+        }
+        logger.info(`Konzi updated: ${konzi.title}`);
+        return res.sendStatus(204);
+    } catch (err) {
+        logger.error(err);
+        return res.sendStatus(422);
+    }
 };
 
-// delete user
-export const del = (req, res) => {
-    Konzi.findByIdAndDelete({ _id: req.params.konziId })
-        .then((konzi) => {
-            if (!konzi) {
-                res.sendStatus(404);
-            }
-            logger.info(`Konzi deleted: ${konzi.title}`);
-            res.sendStatus(204);
-        }).catch((err) => {
-            logger.error(err);
-            res.status(422).send(err.errors);
-        });
+// delete konzi
+export const del = async (req, res) => {
+    try {
+        const konzi = await Konzi.findByIdAndDelete({ _id: req.params.konziId });
+        if (!konzi) {
+            logger.warn(`Konzi not deleted: ${req.params.konziId}`);
+            return res.sendStatus(404);
+        }
+        logger.info(`Konzi deleted: ${konzi.title}`);
+        return res.sendStatus(204);
+    } catch (err) {
+        logger.error(err);
+        return res.sendStatus(422);
+    }
 };
