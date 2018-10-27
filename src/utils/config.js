@@ -1,19 +1,8 @@
-import path from 'path';
-import fs from 'fs';
 import dotenv from 'dotenv';
-import logger from './logging';
+
+import { createFolder } from './helpers';
 
 dotenv.config();
-
-logger.info(`Loaded config for env ${process.env.ENV}`);
-
-// check if the upload directory exists, otherwise create it in the project root
-const uploadPath = path.resolve(path.join(process.cwd(), process.env.UPLOAD_DIR));
-try {
-    fs.mkdirSync(uploadPath);
-} catch (err) {
-    if (err.code !== 'EEXIST') throw err;
-}
 
 export default {
     env: process.env.ENV,
@@ -25,5 +14,6 @@ export default {
     adminUserName: process.env.API_ADMIN_NAME,
     jwtSecret: process.env.JWT_SECRET,
     uploadDir: process.env.UPLOAD_DIR,
-    uploadPath
+    uploadPath: createFolder(process.env.UPLOAD_DIR),
+    logPath: createFolder(process.env.LOG_DIR)
 };
