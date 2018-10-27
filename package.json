@@ -34,13 +34,16 @@
         "dotenv": "^5.0.0",
         "express": "^4.16.2",
         "express-unless": "^0.5.0",
+        "formidable": "^1.2.1",
         "jsonwebtoken": "^8.3.0",
+        "moment": "^2.22.2",
         "mongoose": "^5.3.4",
         "mongoose-bcrypt": "^1.5.0",
         "mongoose-string-query": "^0.2.5",
         "mongoose-timestamp": "^0.6.0",
         "nodemailer": "^4.6.8",
         "serve-favicon": "^2.4.5",
+        "slug": "^0.9.2",
         "validator": "^9.4.0"
     },
     "devDependencies": {

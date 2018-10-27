@@ -1,6 +1,9 @@
 # dist
 dist/
 
+# uploads
+uploads/
+
 # Logs
 logs
 *.log

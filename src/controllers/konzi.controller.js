@@ -1,5 +1,14 @@
-import Konzi from '../models/konzi.model';
+import formidable from 'formidable';
+import slug from 'slug';
+import fs from 'fs';
+import moment from 'moment';
+import path from 'path';
+
+import config from '../utils/config';
 import logger from '../utils/logging';
+import { formatFileSize } from '../utils/helpers';
+
+import Konzi from '../models/konzi.model';
 
 // list all konzis
 export const list = async (req, res) => {
@@ -32,10 +41,39 @@ export const get = async (req, res) => {
     }
 };
 
-// create konzi
+// create konzi (with image upload)
 export const post = async (req, res) => {
     try {
-        const konzi = new Konzi(req.body);
+        // configure formidable file upload
+        const form = new formidable.IncomingForm();
+        form.encoding = 'utf-8';
+        form.uploadDir = config.uploadPath;
+        // wrap the callback in a promise for async await support
+        const konzi = await new Promise((resolve, reject) => {
+            form.parse(req, async (err, fields, file) => {
+                if (err) {
+                    reject(err);
+                }
+                // create model from form fields
+                const newKonzi = new Konzi(fields);
+                // check if we have a file upload
+                if (file && file.file) {
+                    const { size, path: temporaryUploadPath, type } = file.file;
+                    // i.e. type image/png -> png
+                    const flyerExtension = type.split('/')[1];
+                    // rename temporary file to final name
+                    const flyerFilename = `${moment(newKonzi.date).format('YYYY-MM-DD')}-${slug(newKonzi.title, { lower: true })}.${flyerExtension}`;
+                    const finalFlyerPath = path.join(path.dirname(temporaryUploadPath), flyerFilename);
+                    fs.renameSync(temporaryUploadPath, finalFlyerPath);
+                    // for the db, we save the relative download path /uploadDir/name
+                    const flyerRelativePath = path.join(config.uploadDir, flyerFilename);
+                    newKonzi.flyer = flyerRelativePath;
+                    logger.info(`Flyer for Konzi saved: ${flyerRelativePath} (${formatFileSize(size)})`);
+                }
+                resolve(newKonzi);
+            });
+        });
+        // save to db
         await konzi.save();
         logger.info(`Konzi created: ${konzi.title}`);
         return res.status(201).send(konzi.id);

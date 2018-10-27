@@ -75,7 +75,7 @@
 						},
 						{
 							"key": "password",
-							"value": "egsssscgrtcgertgrgrgresrgsrcgcsregrse",
+							"value": "sdkghfdhkgflsgfsgfjkshdgfsdgfuszdgf",
 							"type": "text"
 						},
 						{
@@ -100,13 +100,159 @@
 			"response": []
 		},
 		{
+			"name": "localhost:8080/recover",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "recoveryCode",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "active",
+							"value": "true",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "admin",
+							"value": "false",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "test-user@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "usernameOrEmail",
+							"value": "test-user@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "egsssscgrtcgertgrgrgresrgsrcgcsregrse",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "postmanuser",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/recover",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recover"
+					]
+				},
+				"description": "CREATE user"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/recover Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "recoveryCode",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "active",
+							"value": "true",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "admin",
+							"value": "false",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "test-user@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "usernameOrEmail",
+							"value": "test-user@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "newPassword",
+							"value": "newegsssscgrtcgertgrgrgresrgsrcgcsregrsenew",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "postmanuser",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/reset/6e839822ca75749fdbe1e7bcf6810c6da6811e2ca64fd0533cc9c6fab4cb129564ccd3b82f24f8b1267318c696a5eaceb0f548e1dc73101d304856c866a65ff3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reset",
+						"6e839822ca75749fdbe1e7bcf6810c6da6811e2ca64fd0533cc9c6fab4cb129564ccd3b82f24f8b1267318c696a5eaceb0f548e1dc73101d304856c866a65ff3"
+					]
+				},
+				"description": "CREATE user"
+			},
+			"response": []
+		},
+		{
 			"name": "localhost:8080/user",
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZDA2Y2JhMjFlY2QxNjAyMTU1ZjYxNyIsImlhdCI6MTU0MDQxMzc5MiwiZXhwIjoxNTQwNDE3MzkyfQ.vTT1Uoq98KJqX8POYWOo6W5K9qeqs_wKDfeA3i4GBKQ",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZDA2Y2JhMjFlY2QxNjAyMTU1ZjYxNyIsImlhdCI6MTU0MDU4OTUyMywiZXhwIjoxNTQwNTkzMTIzfQ.Ry3hpm5DYuhRvDHJRxd9pavB3vrjOEHkHJ5mgQF3BgI",
 						"type": "text"
 					}
 				],
@@ -135,7 +281,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZDA2Y2JhMjFlY2QxNjAyMTU1ZjYxNyIsImlhdCI6MTU0MDQxMzc5MiwiZXhwIjoxNTQwNDE3MzkyfQ.vTT1Uoq98KJqX8POYWOo6W5K9qeqs_wKDfeA3i4GBKQ",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZDA2Y2JhMjFlY2QxNjAyMTU1ZjYxNyIsImlhdCI6MTU0MDU4OTUyMywiZXhwIjoxNTQwNTkzMTIzfQ.Ry3hpm5DYuhRvDHJRxd9pavB3vrjOEHkHJ5mgQF3BgI",
 						"type": "text"
 					}
 				],
@@ -234,6 +380,11 @@
 						"name": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYzUwNjIxZjVkMjg0MDEwN2Q3YWJkMCIsImlhdCI6MTU0MDQxNjM1NSwiZXhwIjoxNTQwNDE5OTU1fQ.ZTDfRru-nDjN1xKb1g0EMGrQdtH27eys-uMEa6IQ1ic",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -261,25 +412,30 @@
 						},
 						{
 							"key": "username",
-							"value": "postmanuserupdated",
+							"value": "postmanuser",
 							"type": "text"
 						},
 						{
 							"key": "name",
-							"value": "postmanuser-updated",
+							"value": "postmanuser",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "sdkghfdhkgflsgfsgfjkshdgfsdgfuszdgf",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "localhost:8080/user/5bcf8775571c80525d057719",
+					"raw": "localhost:8080/user/5bd06cba21ecd1602155f617",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"user",
-						"5bcf8775571c80525d057719"
+						"5bd06cba21ecd1602155f617"
 					]
 				},
 				"description": "update user"
@@ -339,7 +495,13 @@
 			"name": "localhost:8080/konzi/5bd073668b970564809993cc",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZDA2Y2JhMjFlY2QxNjAyMTU1ZjYxNyIsImlhdCI6MTU0MDU4ODUwOSwiZXhwIjoxNTQwNTkyMTA5fQ.JzAFqEIcOPyo7mveEvQbprKuU9jxQ7T4DiWxYZW9gow",
+						"type": "text"
+					}
+				],
 				"body": {},
 				"url": {
 					"raw": "localhost:8080/konzi/5bd073668b970564809993cc",
@@ -364,27 +526,37 @@
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZDA2Y2JhMjFlY2QxNjAyMTU1ZjYxNyIsImlhdCI6MTU0MDY0MTY2MywiZXhwIjoxNTQwNjQ1MjYzfQ.eX6Evl5kPEAgBhXzQvHbqJbjuGB5-iUWT_6qM9Vv6hY",
+						"type": "text"
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
+					"mode": "formdata",
+					"formdata": [
 						{
 							"key": "title",
-							"value": "Wärters Schlechte",
+							"value": "Sachen",
 							"type": "text"
 						},
 						{
 							"key": "date",
-							"value": "2019-11-11T20:00:00.000Z",
+							"value": "2022-12-11T20:00:00.000Z",
 							"type": "text"
 						},
 						{
 							"key": "description",
-							"value": "punkrock",
+							"value": "Konzi Supi",
 							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
 						}
 					]
 				},
@@ -453,7 +625,14 @@
 			"name": "localhost:8080/konzi/5bd073668b970564809993cc",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
 				"body": {},
 				"url": {
 					"raw": "localhost:8080/konzi/5bd073668b970564809993cc",

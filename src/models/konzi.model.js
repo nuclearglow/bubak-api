@@ -22,7 +22,11 @@ export const KonziSchema = new Schema(
             trim: true,
             index: true
         },
-        // >TODO: Flyer image ?!?
+        flyer: {
+            type: String,
+            lowercase: true,
+            trim: true
+        }
     },
     { collection: 'konzis' }
 );
