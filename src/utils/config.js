@@ -15,5 +15,9 @@ export default {
     jwtSecret: process.env.JWT_SECRET,
     uploadDir: process.env.UPLOAD_DIR,
     uploadPath: createFolder(process.env.UPLOAD_DIR),
-    logPath: createFolder(process.env.LOG_DIR)
+    logPath: createFolder(process.env.LOG_DIR),
+    smtpHost: process.env.SMTP_HOST,
+    smtpPort: process.env.SMTP_PORT,
+    smtpUser: process.env.SMTP_USER,
+    smtpPass: process.env.SMTP_PASS
 };

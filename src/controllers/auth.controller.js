@@ -52,40 +52,31 @@ export const recover = async (req, res) => {
             await user.save();
             // send the email to the user
             const recoveryUrl = `${config.serverUrl}/reset/${recoveryCode}`;
-            // FIXME: replace with real account
-            nodemailer.createTestAccount(async (err, account) => {
-                if (err) {
-                    logger.error(`Error setting up nodemailer: ${err}`);
+            // create reusable transporter object using the default SMTP transport
+            const transporter = nodemailer.createTransport({
+                host: config.smtpHost,
+                port: config.smtpPort,
+                secure: config.smtpPort === 465, // true for 465, false for other ports
+                auth: {
+                    user: config.smtpUser,
+                    pass: config.smtpPass // generated ethereal password
                 }
-                // create reusable transporter object using the default SMTP transport
-                const transporter = nodemailer.createTransport({
-                    host: 'smtp.ethereal.email',
-                    port: 587,
-                    secure: false, // true for 465, false for other ports
-                    auth: {
-                        user: account.user, // generated ethereal user
-                        pass: account.pass // generated ethereal password
-                    }
-                });
-                // setup email data with unicode symbols
-                const mailOptions = {
-                    from: 'bubak', // sender address
-                    to: `${config.adminUserEmail}`, // list of receivers
-                    subject: 'Hello', // Subject line
-                    text: `Passwort verschwitzt? Klick hier: ${recoveryUrl}`, // plain text body
-                    html: `Passwort verschwitzt? Klick hier: ${recoveryUrl}` // html body
-                };
-                // send mail with defined transport object
-
-                transporter.sendMail(mailOptions, (error, response) => {
-                    if (error) {
-                        logger.error(`Error sending mail: ${error}`);
-                    } else {
-                        logger.info(`Message sent: ${response.messageId}`);
-                        // Preview only available when sending through an Ethereal account
-                        logger.info(`Preview URL: ${nodemailer.getTestMessageUrl(response)}`);
-                    }
-                });
+            });
+            // setup email data with unicode symbols
+            const mailOptions = {
+                from: 'bubak', // sender address
+                to: `${config.adminUserEmail}`, // list of receivers
+                subject: 'Hello', // Subject line
+                text: `Passwort verschwitzt? Klick hier: ${recoveryUrl}`, // plain text body
+                html: `Passwort verschwitzt? Klick hier: ${recoveryUrl}` // html body
+            };
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, response) => {
+                if (error) {
+                    logger.error(`Error sending mail: ${error}`);
+                } else {
+                    logger.info(`Message sent: ${JSON.stringify(response)}`);
+                }
             });
         }
     } catch (err) {
