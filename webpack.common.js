@@ -3,11 +3,9 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const config = {
-    mode: 'development',
+const commonConfig = {
     plugins: [
         new CleanWebpackPlugin(['logs/*.log']),
-        new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: false }),
     ],
     entry: path.resolve(path.join(process.cwd(), 'src', 'server.js')),
     output: {
@@ -31,7 +29,6 @@ const config = {
         ]
     },
     target: 'node',
-    devtool: 'sourcemap',
     externals: [nodeExternals()],
     resolve: {
         extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.jsx'],
@@ -133,4 +130,4 @@ const config = {
     }
 };
 
-module.exports = config;
+module.exports = commonConfig;
