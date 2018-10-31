@@ -3,10 +3,13 @@
     "version": "1.0.0",
     "description": "Bubak REST API using Express, Mongoose, and MongoDB.",
     "scripts": {
-        "build:server:once": "cross-env NODE_ENV=development webpack --config webpack.dev.js",
+        "build:server:dev": "cross-env NODE_ENV=development webpack --config webpack.dev.js",
         "watch:server": "cross-env NODE_ENV=development webpack --config webpack.dev.js --watch",
         "nodemon:dev": "cross-env NODE_ENV=development nodemon --inspect ./dist/server.js",
-        "start": "npm run build:server:once && npm-run-all --parallel nodemon:dev watch:server"
+        "start": "npm run build:server:dev && npm-run-all --parallel nodemon:dev watch:server",
+        "build:server:prod": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
+        "serve:build": "cross-env NODE_ENV=production node dist/server.js",
+        "serve:prod": "cross-env NODE_ENV=production npm-run-all build:server:prod serve:build"
     },
     "author": "nuclearglow",
     "license": "anarchy",

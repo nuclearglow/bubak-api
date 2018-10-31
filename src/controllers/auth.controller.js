@@ -52,20 +52,30 @@ export const recover = async (req, res) => {
             await user.save();
             // send the email to the user
             const recoveryUrl = `${config.serverUrl}/reset/${recoveryCode}`;
+
+            // TODO: create own email js module
             // create reusable transporter object using the default SMTP transport
             const transporter = nodemailer.createTransport({
                 host: config.smtpHost,
                 port: config.smtpPort,
-                secure: config.smtpPort === 465, // true for 465, false for other ports
+                secure: true, // true for 465, false for other ports
                 auth: {
                     user: config.smtpUser,
-                    pass: config.smtpPass // generated ethereal password
+                    pass: config.smtpPass
+                }
+            });
+            // test connection
+            transporter.verify((error) => {
+                if (error) {
+                    logger.error(`Error verifying SMTP: ${error}`);
+                } else {
+                    logger.info('Success verifying SMTP');
                 }
             });
             // setup email data with unicode symbols
             const mailOptions = {
                 from: 'bubak', // sender address
-                to: `${config.adminUserEmail}`, // list of receivers
+                to: 'seblan@gmx.eu', // list of receivers
                 subject: 'Hello', // Subject line
                 text: `Passwort verschwitzt? Klick hier: ${recoveryUrl}`, // plain text body
                 html: `Passwort verschwitzt? Klick hier: ${recoveryUrl}` // html body
