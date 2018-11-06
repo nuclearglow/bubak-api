@@ -14,7 +14,7 @@ import Konzi from '../models/konzi.model';
 export const list = async (req, res) => {
     try {
         const query = req.query || {};
-        const konzis = await Konzi.apiQuery(query).select('date description');
+        const konzis = await Konzi.apiQuery(query).select('title date description flyer');
         if (!konzis) {
             logger.warn('No konzis found');
             return res.json([]);

@@ -26,9 +26,12 @@ api.use(verifyTokenMiddleware().unless({
         { url: '/login', methods: 'POST' }, // login is public
         { url: '/recover', methods: 'POST' }, // forgot password is oublix
         /\/reset\/[0-9a-fA-F]{128}/, // allow reset URL with recovery code from email
-        { url: '/konzi', methods: 'GET' } // konzis are public
+        { url: '/konzi', methods: 'GET' }, // konzis are public
+        /\/uploads\/.*$/ // allow all uploaded flyers
     ]
 }));
+// static upload files: flyers
+api.use('/uploads', express.static('uploads'));
 // Auth routes
 api.route('/login').post(Auth.login);
 api.route('/recover').post(Auth.recover);
