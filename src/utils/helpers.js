@@ -1,6 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 
+import sizeOf from 'image-size';
+
 /**
  * @param {int} bytes a bytenumber of bytes such as a file size
  * @returns {string} formatted size
@@ -24,3 +26,9 @@ export const createFolder = (dir) => {
     }
     return p;
 };
+
+/**
+ * takes a full image path, and returns the size as object containing width and height
+ * @param {string} imagePath expects the path to an image
+ */
+export const getImageSize = async imagePath => sizeOf(imagePath);

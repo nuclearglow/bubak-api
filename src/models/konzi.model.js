@@ -1,6 +1,9 @@
+import path from 'path';
 import mongoose, { Schema } from 'mongoose';
 import timestamps from 'mongoose-timestamp';
 import mongooseStringQuery from 'mongoose-string-query';
+
+import { getImageSize } from '../utils/helpers';
 
 export const KonziSchema = new Schema(
     {
@@ -26,9 +29,17 @@ export const KonziSchema = new Schema(
             type: String,
             lowercase: true,
             trim: true
+        },
+        width: {
+            type: Number
+        },
+        height: {
+            type: Number
         }
     },
-    { collection: 'konzis' }
+    {
+        collection: 'konzis',
+    }
 );
 
 // UserSchema.pre('save', function (next) {

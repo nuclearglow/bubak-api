@@ -24,7 +24,7 @@ api.use(bodyParser.json());
 api.use(verifyTokenMiddleware().unless({
     path: [
         { url: '/login', methods: 'POST' }, // login is public
-        { url: '/recover', methods: 'POST' }, // forgot password is oublix
+        { url: '/recover', methods: 'POST' }, // forgot password is oublic
         /\/reset\/[0-9a-fA-F]{128}/, // allow reset URL with recovery code from email
         { url: '/konzi', methods: 'GET' }, // konzis are public
         /\/uploads\/.*$/ // allow all uploaded flyers

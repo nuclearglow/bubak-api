@@ -6,7 +6,7 @@ import path from 'path';
 
 import config from '../utils/config';
 import logger from '../utils/logging';
-import { formatFileSize } from '../utils/helpers';
+import { formatFileSize, getImageSize } from '../utils/helpers';
 
 import Konzi from '../models/konzi.model';
 
@@ -14,7 +14,8 @@ import Konzi from '../models/konzi.model';
 export const list = async (req, res) => {
     try {
         const query = req.query || {};
-        const konzis = await Konzi.apiQuery(query).select('title date description flyer');
+        const konzis = await Konzi.apiQuery(query).select('title date description flyer width height');
+
         if (!konzis) {
             logger.warn('No konzis found');
             return res.json([]);
@@ -29,7 +30,7 @@ export const list = async (req, res) => {
 // get a single konzi
 export const get = async (req, res) => {
     try {
-        const konzi = await Konzi.findById(req.params.konziId).select('date title description');
+        const konzi = await Konzi.findById(req.params.konziId).select('date title description flyer width height');
         if (!konzi) {
             logger.info(`Konzi not found: ${req.params.konziId}`);
             return res.sendStatus(404);
@@ -69,6 +70,8 @@ export const post = async (req, res) => {
                     const flyerRelativePath = path.join(config.uploadDir, flyerFilename);
                     newKonzi.flyer = flyerRelativePath;
                     logger.info(`Flyer for Konzi saved: ${flyerRelativePath} (${formatFileSize(size)})`);
+                    // determine the image dimensions save them as part of newKonzi
+                    ({ width: newKonzi.width, height: newKonzi.height } = await getImageSize(finalFlyerPath));
                 }
                 resolve(newKonzi);
             });
